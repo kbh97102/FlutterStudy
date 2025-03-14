@@ -16,37 +16,54 @@ class RootView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              SizedBox(height: 80),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Hey, Arakene",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 38,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Welcom back",
-                        style: TextStyle(
-                          color: Colors.white.withValues(alpha: 0.8),
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              TopSection()
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+
+class TopSection extends StatelessWidget{
+  const TopSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 80),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+
+            // TODO: Image
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "Hey, Arakene",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 38,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Welcom back",
+                  style: TextStyle(
+                    color: Colors.white.withValues(alpha: 0.8),
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    )
   }
 }
