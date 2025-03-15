@@ -43,6 +43,7 @@ class Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Color(0XFF1F2123),
         borderRadius: BorderRadius.circular(25),
@@ -50,6 +51,7 @@ class Card extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(30),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,6 +82,13 @@ class Card extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+            Transform.scale(
+              scale: 2.2,
+              child: Transform.translate(
+                offset: Offset(8, 15),
+                child: Icon(Icons.euro_rounded, color: Colors.white, size: 88),
+              ),
             ),
           ],
         ),
