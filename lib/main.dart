@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_flutter/widgets/card.dart';
 
 void main() {
   runApp(RootView());
@@ -95,6 +96,10 @@ class TotalBalanceSection extends StatelessWidget {
         SizedBox(height: 25),
 
         BalanceButtons(),
+
+        SizedBox(height: 30,),
+
+        CardSection(),
       ],
     );
   }
