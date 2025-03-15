@@ -15,9 +15,8 @@ class RootView extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            children: [
-              TopSection()
-            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [TopSection(), TotalBalanceSection()],
           ),
         ),
       ),
@@ -25,8 +24,7 @@ class RootView extends StatelessWidget {
   }
 }
 
-
-class TopSection extends StatelessWidget{
+class TopSection extends StatelessWidget {
   const TopSection({super.key});
 
   @override
@@ -38,9 +36,7 @@ class TopSection extends StatelessWidget{
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-
             // TODO: Image
-
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -64,6 +60,75 @@ class TopSection extends StatelessWidget{
           ],
         ),
       ],
-    )
+    );
+  }
+}
+
+class TotalBalanceSection extends StatelessWidget {
+  const TotalBalanceSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 120),
+        Text(
+          "Total Balance",
+          style: TextStyle(
+            fontSize: 22,
+            color: Colors.white.withValues(alpha: 0.8),
+          ),
+        ),
+
+        SizedBox(height: 10),
+
+        Text(
+          "\$5 194 482",
+          style: TextStyle(
+            fontSize: 42,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+
+        SizedBox(height: 25),
+
+        BalanceButtons(),
+      ],
+    );
+  }
+}
+
+class BalanceButtons extends StatelessWidget {
+  const BalanceButtons({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(45),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Text("Transfer", style: TextStyle(fontSize: 20)),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(45),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+            child: Text("Transfer", style: TextStyle(fontSize: 20)),
+          ),
+        ),
+      ],
+    );
   }
 }
