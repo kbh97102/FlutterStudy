@@ -108,27 +108,46 @@ class BalanceButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(45),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-            child: Text("Transfer", style: TextStyle(fontSize: 20)),
-          ),
+        CustomButton(
+          title: "Transfer",
+          backgroundColor: Colors.amber,
+          textColor: Colors.black,
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(45),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-            child: Text("Transfer", style: TextStyle(fontSize: 20)),
-          ),
+        CustomButton(
+          title: "Request",
+          backgroundColor: Color(0x0ff1b33b),
+          textColor: Colors.white,
         ),
       ],
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  // TODO: 왜 final을 붙이는가
+  final String title;
+  final Color backgroundColor;
+  final Color textColor;
+
+  // TODO 왜 생성자에 const를 붙이는가
+  const CustomButton({
+    super.key,
+    required this.title,
+    required this.backgroundColor,
+    required this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(45),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+        child: Text(title, style: TextStyle(fontSize: 20, color: textColor)),
+      ),
     );
   }
 }
