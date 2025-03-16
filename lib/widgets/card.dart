@@ -37,26 +37,23 @@ class CardSection extends StatelessWidget {
           code: "EUR",
           icon: Icons.euro_rounded,
           isInverted: false,
+          index: 0,
         ),
-        Transform.translate(
-          offset: Offset(0, -20),
-          child: Card(
-            amount: "7 000",
-            name: "Bitcoin",
-            code: "BTC",
-            icon: Icons.currency_bitcoin,
-            isInverted: true,
-          ),
+        Card(
+          amount: "7 000",
+          name: "Bitcoin",
+          code: "BTC",
+          icon: Icons.currency_bitcoin,
+          isInverted: true,
+          index: 1,
         ),
-        Transform.translate(
-          offset: Offset(0, -40),
-          child: Card(
-            amount: "6 500",
-            name: "Dollar",
-            code: "USD",
-            icon: Icons.attach_money_outlined,
-            isInverted: false,
-          ),
+        Card(
+          amount: "6 500",
+          name: "Dollar",
+          code: "USD",
+          icon: Icons.attach_money_outlined,
+          isInverted: false,
+          index: 2,
         ),
       ],
     );
@@ -67,6 +64,7 @@ class Card extends StatelessWidget {
   final String name, code, amount;
   final IconData icon;
   final bool isInverted;
+  final double index;
 
   // TODO: underbar == private?
   final _blackColor = const Color(0XFF1F2123);
@@ -78,66 +76,70 @@ class Card extends StatelessWidget {
     required this.amount,
     required this.icon,
     required this.isInverted,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: isInverted ? Colors.white : _blackColor,
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(30),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: TextStyle(
+    return Transform.translate(
+      offset: Offset(0, (-20 * index)),
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          color: isInverted ? Colors.white : _blackColor,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: isInverted ? _blackColor : Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text(
+                        amount,
+                        style: TextStyle(
+                          color: isInverted ? _blackColor : Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        code,
+                        style: TextStyle(
+                          color: isInverted ? _blackColor : Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Transform.scale(
+                scale: 2.2,
+                child: Transform.translate(
+                  offset: Offset(8, 15),
+                  child: Icon(
+                    icon,
                     color: isInverted ? _blackColor : Colors.white,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
+                    size: 88,
                   ),
                 ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Text(
-                      amount,
-                      style: TextStyle(
-                        color: isInverted ? _blackColor : Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      code,
-                      style: TextStyle(
-                        color: isInverted ? _blackColor : Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Transform.scale(
-              scale: 2.2,
-              child: Transform.translate(
-                offset: Offset(8, 15),
-                child: Icon(
-                  icon,
-                  color: isInverted ? _blackColor : Colors.white,
-                  size: 88,
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
