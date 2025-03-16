@@ -10,13 +10,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int totalSeconds = 1500;
+  // TODO: 자바의 스태틱과 같은건가 설마?
+  static const _defaultSeconds = 1500;
+  int totalSeconds = _defaultSeconds;
   bool isRunning = false;
+  int totalPomodoros = 0;
 
   // TODO: lazy init 과연 안전한가? 어떻게 체크할 수 있을까?
   late Timer timer;
 
   void onTick() {
+    if (totalSeconds == 0) {
+      setState(() {
+        isRunning = false;
+        totalPomodoros += 1;
+        totalSeconds = _defaultSeconds;
+      });
+      timer.cancel();
+
+      return;
+    }
     setState(() {
       totalSeconds -= 1;
     });
@@ -38,6 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  String format(int seconds) {
+    return Duration(
+      seconds: seconds,
+    ).toString().split('.').first.substring(2, 7);
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData _localTheme = Theme.of(context);
@@ -50,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                "$totalSeconds",
+                format(totalSeconds),
                 style: TextStyle(
                   color: _localTheme.cardColor,
                   fontSize: 89,
@@ -98,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "0",
+                          "$totalPomodoros",
                           style: TextStyle(
                             fontSize: 58,
                             color:
