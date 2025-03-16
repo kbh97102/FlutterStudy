@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int totalSeconds = 1500;
+  bool isRunning = false;
 
   // TODO: lazy init 과연 안전한가? 어떻게 체크할 수 있을까?
   late Timer timer;
@@ -24,6 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void onStartPressed() {
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       onTick();
+    });
+    setState(() {
+      isRunning = true;
+    });
+  }
+
+  void onPausePressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
     });
   }
 
@@ -52,8 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
             flex: 2,
             child: Center(
               child: IconButton(
-                onPressed: onStartPressed,
-                icon: Icon(Icons.play_circle_outline_outlined),
+                onPressed: isRunning ? onPausePressed : onStartPressed,
+                icon: Icon(
+                  isRunning
+                      ? Icons.pause_circle_outline_outlined
+                      : Icons.play_circle_outline_outlined,
+                ),
                 iconSize: 120,
                 color: _localTheme.cardColor,
               ),
