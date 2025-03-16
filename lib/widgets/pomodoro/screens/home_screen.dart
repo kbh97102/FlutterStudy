@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int totalSeconds = 1500;
+
+  // TODO: lazy init 과연 안전한가? 어떻게 체크할 수 있을까?
+  late Timer timer;
+
+  void onTick() {
+    setState(() {
+      totalSeconds -= 1;
+    });
+  }
+
+  void onStartPressed() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      onTick();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData _localTheme = Theme.of(context);
@@ -20,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                "25:00",
+                "$totalSeconds",
                 style: TextStyle(
                   color: _localTheme.cardColor,
                   fontSize: 89,
@@ -33,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             flex: 2,
             child: Center(
               child: IconButton(
-                onPressed: () {},
+                onPressed: onStartPressed,
                 icon: Icon(Icons.play_circle_outline_outlined),
                 iconSize: 120,
                 color: _localTheme.cardColor,
@@ -46,7 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(color: _localTheme.cardColor),
+                    decoration: BoxDecoration(
+                      color: _localTheme.cardColor,
+                      borderRadius: BorderRadius.circular(32),
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
