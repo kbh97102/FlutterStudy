@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/widgets/card.dart';
+import 'package:test_flutter/widgets/pomodoro/pomodoroRoot.dart';
 
 void main() {
-  runApp(RootView());
+  // runApp(RootView());
+  runApp(PomodoroRoot());
 }
 
 class RootView extends StatelessWidget {
