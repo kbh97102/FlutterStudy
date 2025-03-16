@@ -31,21 +31,61 @@ class CardSection extends StatelessWidget {
 
         SizedBox(height: 20),
 
-        Card(),
+        Card(
+          amount: "6 500",
+          name: "Euro",
+          code: "EUR",
+          icon: Icons.euro_rounded,
+          isInverted: false,
+        ),
+        Transform.translate(
+          offset: Offset(0, -20),
+          child: Card(
+            amount: "7 000",
+            name: "Bitcoin",
+            code: "BTC",
+            icon: Icons.currency_bitcoin,
+            isInverted: true,
+          ),
+        ),
+        Transform.translate(
+          offset: Offset(0, -40),
+          child: Card(
+            amount: "6 500",
+            name: "Dollar",
+            code: "USD",
+            icon: Icons.attach_money_outlined,
+            isInverted: false,
+          ),
+        ),
       ],
     );
   }
 }
 
 class Card extends StatelessWidget {
-  const Card({super.key});
+  final String name, code, amount;
+  final IconData icon;
+  final bool isInverted;
+
+  // TODO: underbar == private?
+  final _blackColor = const Color(0XFF1F2123);
+
+  const Card({
+    super.key,
+    required this.name,
+    required this.code,
+    required this.amount,
+    required this.icon,
+    required this.isInverted,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Color(0XFF1F2123),
+        color: isInverted ? Colors.white : _blackColor,
         borderRadius: BorderRadius.circular(25),
       ),
       child: Padding(
@@ -57,9 +97,9 @@ class Card extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Euro",
+                  name,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: isInverted ? _blackColor : Colors.white,
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
                   ),
@@ -68,14 +108,17 @@ class Card extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "6 428",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      amount,
+                      style: TextStyle(
+                        color: isInverted ? _blackColor : Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
                     SizedBox(width: 5),
                     Text(
-                      "EUR",
+                      code,
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: isInverted ? _blackColor : Colors.white,
                         fontSize: 18,
                       ),
                     ),
@@ -87,7 +130,11 @@ class Card extends StatelessWidget {
               scale: 2.2,
               child: Transform.translate(
                 offset: Offset(8, 15),
-                child: Icon(Icons.euro_rounded, color: Colors.white, size: 88),
+                child: Icon(
+                  icon,
+                  color: isInverted ? _blackColor : Colors.white,
+                  size: 88,
+                ),
               ),
             ),
           ],

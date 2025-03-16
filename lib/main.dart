@@ -73,7 +73,7 @@ class TotalBalanceSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 120),
+        SizedBox(height: 70),
         Text(
           "Total Balance",
           style: TextStyle(
@@ -97,7 +97,7 @@ class TotalBalanceSection extends StatelessWidget {
 
         BalanceButtons(),
 
-        SizedBox(height: 30,),
+        SizedBox(height: 30),
 
         CardSection(),
       ],
