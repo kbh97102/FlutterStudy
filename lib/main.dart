@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/widgets/card.dart';
-import 'package:test_flutter/widgets/pomodoro/pomodoroRoot.dart';
+import 'package:test_flutter/widgets/webtoon/home_screen.dart';
 
 void main() {
   // runApp(RootView());
-  runApp(PomodoroRoot());
+  runApp(MaterialApp(home: HomeScreen()));
 }
 
 class RootView extends StatelessWidget {
