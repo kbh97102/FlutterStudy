@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:test_flutter/service/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final apiService = ApiSerivce();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -17,7 +20,14 @@ class HomeScreen extends StatelessWidget {
         elevation: 2,
         centerTitle: true,
       ),
-      body: Container(),
+      body: Container(
+        child: TextButton(
+          onPressed: () {
+            apiService.getTodayToons();
+          },
+          child: Text("test"),
+        ),
+      ),
     );
   }
 }
