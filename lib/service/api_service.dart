@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:test_flutter/widgets/models/webtoon_model.dart';
 
 class ApiSerivce {
-  final baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
-  final todayEndpoint = "today";
+  static const baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
+  static const todayEndpoint = "today";
 
-  Future<List<WebtoonModel>> getTodayToons() async {
+  static Future<List<WebtoonModel>> getTodayToons() async {
     final webtoonList = <WebtoonModel>[];
     final response = await http.get(Uri.parse("$baseUrl/$todayEndpoint"));
 
