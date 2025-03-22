@@ -18,9 +18,6 @@ class ApiSerivce {
         webtoonList.add(WebtoonModel.fromJson(webtoon));
       }
     }
-
-    webtoonList.forEach((info) => print(info));
-
     return webtoonList;
   }
 }

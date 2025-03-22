@@ -5,7 +5,7 @@ import 'package:test_flutter/widgets/models/webtoon_model.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  Future<List<WebtoonModel>> webtoons = ApiSerivce.getTodayToons();
+  final Future<List<WebtoonModel>> webtoons = ApiSerivce.getTodayToons();
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,22 @@ class HomeScreen extends StatelessWidget {
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Text("Has Data");
-          } else {
-            return Text("Loading");
+            final data = snapshot.data ?? List.empty();
+            print(data);
+            /**
+             * ListView를 사용하면 주어진 데이터 모두를 한번에 그림
+             * ListView.builder를 사용하면 보여지는 아이템만 그리고 안보이게된 것들은 메모리에서 제거함
+             * seperated도 builder와 동일하게 로직탐
+             */
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return Text(data[index].title);
+              },
+              itemCount: data.length,
+              separatorBuilder: (context, index) => SizedBox(height: 20),
+            );
           }
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
