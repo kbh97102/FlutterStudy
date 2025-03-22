@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_flutter/service/api_service.dart';
 import 'package:test_flutter/widgets/models/webtoon_detail_model.dart';
 import 'package:test_flutter/widgets/models/webtoon_episode_model.dart';
@@ -25,6 +26,22 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences prefs;
+  bool isLiked = false;
+
+  final _likedToonsKey = "likedToons";
+
+  Future initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList(_likedToonsKey);
+    if (likedToons != null) {
+      setState(() {
+        isLiked = likedToons.contains(widget.id);
+      });
+    } else {
+      await prefs.setStringList(_likedToonsKey, []);
+    }
+  }
 
   /**
    * Stateless가 아닌 statefull로 한 이유는 initState를 사용하기 위함
@@ -36,6 +53,23 @@ class _DetailScreenState extends State<DetailScreen> {
 
     webtoon = ApiSerivce.getToonById(widget.id);
     episodes = ApiSerivce.getLatestEpisodesById(widget.id);
+    initPrefs();
+  }
+
+  onHeartTap() async {
+    final likedToons = prefs.getStringList(_likedToonsKey);
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+
+      prefs.setStringList(_likedToonsKey, likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
   }
 
   @override
@@ -47,6 +81,14 @@ class _DetailScreenState extends State<DetailScreen> {
           widget.title,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
         ),
+        actions: [
+          IconButton(
+            onPressed: onHeartTap,
+            icon: Icon(
+              isLiked ? Icons.favorite : Icons.favorite_border_outlined,
+            ),
+          ),
+        ],
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
         elevation: 2,
