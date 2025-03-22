@@ -3,6 +3,8 @@ import 'package:test_flutter/service/api_service.dart';
 import 'package:test_flutter/widgets/models/webtoon_detail_model.dart';
 import 'package:test_flutter/widgets/models/webtoon_episode_model.dart';
 
+import 'episode.dart';
+
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
 
@@ -28,7 +30,6 @@ class _DetailScreenState extends State<DetailScreen> {
    * Stateless가 아닌 statefull로 한 이유는 initState를 사용하기 위함
    * 위에서 widget.id 같은 프로퍼티에 접근이 불가능함
    */
-
   @override
   void initState() {
     super.initState();
@@ -123,37 +124,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       spacing: 10,
                       children: [
                         for (var episode in episodes)
-                          Container(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.green.shade500,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      episode.title,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          Episode(episode: episode, webtoonId: widget.id),
                       ],
                     );
                   }
