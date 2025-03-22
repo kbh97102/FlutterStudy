@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:test_flutter/service/api_service.dart';
+import 'package:test_flutter/widgets/models/webtoon_detail_model.dart';
+import 'package:test_flutter/widgets/models/webtoon_episode_model.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
+
+  // Stateless에서는 여기서는 프로퍼티에 접근이 불가능함
+  // Future<WebtoonDetailModel> webtoon = ApiSerivce.getToonById(id);
 
   const DetailScreen({
     super.key,
@@ -11,12 +17,28 @@ class DetailScreen extends StatelessWidget {
   });
 
   @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  late Future<WebtoonDetailModel> webtoon;
+  late Future<List<WebtoonEpisodeModel>> episodes;
+
+  @override
+  void initState() {
+    super.initState();
+
+    webtoon = ApiSerivce.getToonById(widget.id);
+    episodes = ApiSerivce.getLatestEpisodesById(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          title,
+          widget.title,
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
         ),
         backgroundColor: Colors.white,
@@ -35,7 +57,7 @@ class DetailScreen extends StatelessWidget {
                *  태그 매칭
                */
               Hero(
-                tag: id,
+                tag: widget.id,
                 child: Container(
                   width: 250,
                   clipBehavior: Clip.hardEdge,
@@ -50,7 +72,7 @@ class DetailScreen extends StatelessWidget {
                     ],
                   ),
                   child: Image.network(
-                    thumb,
+                    widget.thumb,
                     // 네이버에서 앱에서 실행하면 막아서 브라우저로 agent 변경
                     headers: const {
                       "User-Agent":
