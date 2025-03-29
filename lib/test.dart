@@ -1,1 +1,1 @@
-
+interface class TestInterface {}

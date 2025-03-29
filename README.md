@@ -39,12 +39,12 @@
 ### 모듈 관련
 * 네이티브 모듈을 만들어서 적용하고 싶은데 KMM처럼 인터페이스를 만들고 각각의 네이티브 모듈에서 개발을 진행하는 걸까?
 
-### 비동기 관련
-* 비동기 처리는 async, await이 끝일까? async+도 있던데 이건 뭘까
-* kotlin flow, coroutine같은 개념은 없는 걸까?
-* 쓰레드는 어떻게 동작하는 걸까
-* Dispatcher.Main, IO, Default같은 개념은 없는 걸까
-* 비동기 시 에러 처리는 어떻게 이루어질까
+### [비동기 관련](async_study.md)
+* ~~비동기 처리는 async, await이 끝일까? async+도 있던데 이건 뭘까~~
+* ~~kotlin flow, coroutine같은 개념은 없는 걸까?~~
+* ~~쓰레드는 어떻게 동작하는 걸까~~
+* ~~Dispatcher.Main, IO, Default같은 개념은 없는 걸까~~
+* ~~비동기 시 에러 처리는 어떻게 이루어질까~~
 
 
 # 신경쓰이는 점들

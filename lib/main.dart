@@ -1,10 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter/widgets/card.dart';
-import 'package:test_flutter/widgets/webtoon/home_screen.dart';
 
 void main() {
   // runApp(RootView());
-  runApp(MaterialApp(home: HomeScreen()));
+  runApp(MaterialApp(home: StickyHeaderPage()));
+}
+
+class StickyHeaderPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 1,
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder:
+              (context, innerBoxIsScrolled) => [
+                SliverAppBar(
+                  expandedHeight: 200,
+                  floating: false,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text('Sliver Sticky Header'),
+                    background: Icon(Icons.ac_unit),
+                  ),
+                ),
+
+                // Sticky Header
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _StickyHeaderDelegate(
+                    child: Container(
+                      color: Colors.white,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        'Sticky Section Title',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+          body: ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: 30,
+            itemBuilder: (context, index) {
+              return ListTile(title: Text('Item $index'));
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Sticky Header Delegate
+class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+
+  _StickyHeaderDelegate({required this.child});
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return child;
+  }
+
+  @override
+  double get maxExtent => 50;
+
+  @override
+  double get minExtent => 50;
+
+  @override
+  bool shouldRebuild(covariant _StickyHeaderDelegate oldDelegate) {
+    return oldDelegate.child != child;
+  }
 }
 
 class RootView extends StatelessWidget {
@@ -15,11 +95,28 @@ class RootView extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Color(0xFF181818),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [TopSection(), TotalBalanceSection()],
+        body: Container(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 200.0,
+                floating: false,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text('Sliver Demo'),
+                  background: Image.asset(
+                    'assets/header.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => ListTile(title: Text('Item #$index')),
+                  childCount: 20,
+                ),
+              ),
+            ],
           ),
         ),
       ),
